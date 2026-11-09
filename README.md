@@ -5,7 +5,7 @@ Export **all** your Claude or ChatGPT chats into one place, in a single click:
 - **📄 Text file**: one `.txt` with every chat, each starting with a separator line and the chat's name
 - **📑 Google Doc**: one tab per chat in your own Google Drive, plus an index tab
 
-**Use it here:** https://bennetgibony.github.io/AI_account_migrator/ *(once GitHub Pages is turned on)*
+**Use it here:** https://chatmigration.bennet-gibony.com
 
 ## How it works
 
