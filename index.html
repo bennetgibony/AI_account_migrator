@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Export your AI chats</title>
 <meta name="description" content="Copy all your Claude or ChatGPT chats into one Google Doc, one tab per chat. Runs entirely in your browser.">
-<script src="https://accounts.google.com/gsi/client" async defer></script>
+<link rel="icon" href="logo-32.png">
+<link rel="apple-touch-icon" href="logo-512.png">
 <style>
   :root { --ink:#1b1b1f; --muted:#6b6b76; --line:#e6e4df; --bg:#faf9f6; --accent:#c15f3c; --blue:#1a73e8; }
   * { box-sizing: border-box; }
@@ -94,6 +95,7 @@ Of course! Here's a rough plan…</pre>
   </section>
 
   <p class="fine only-gdoc">Google Docs allow up to 100 tabs per document, so large archives are split into several docs (Part 1, Part 2, …). Google also limits how fast documents can be written, to about 30 chats per minute. Keep this tab open until it's finished. This page asks only for permission to create files in your Drive. It can't see any of your other files.</p>
+  <p class="fine"><a href="privacy.html">Privacy policy</a> · <a href="https://github.com/bennetgibony/AI_account_migrator">Source code on GitHub</a></p>
   <p class="fine">Only each chat's current version is exported. If you edited a message, only the latest branch is included. Attachments are listed by name, without their contents. If a chat site changes how it works, the button may stop working until it's updated.</p>
 </main>
 
@@ -285,6 +287,7 @@ const site = location.origin + location.pathname;
 const gdocReady = !GOOGLE_CLIENT_ID.startsWith('PASTE');
 function setMode(mode) {
   document.body.className = mode;
+  if (mode === 'gdoc') loadGoogle().catch(() => {});
   document.querySelector('input[value="' + mode + '"]').checked = true;
   $('bm').href = 'javascript:' + encodeURIComponent($('bm-src').textContent.replace('__SITE__', site).replace('__MODE__', mode));
   $('bm').textContent = mode === 'txt' ? '⇣ Export my chats (.txt)' : '⇣ Export my chats (Google Doc)';
@@ -323,7 +326,17 @@ drop.addEventListener('drop', async e => {
 
 /* ---------- Google auth ---------- */
 let token = null;
-function getToken() {
+function loadGoogle() {
+  if (window.google && google.accounts) return Promise.resolve();
+  return new Promise((resolve, reject) => {
+    const sc = document.createElement('script');
+    sc.src = 'https://accounts.google.com/gsi/client';
+    sc.onload = resolve; sc.onerror = () => reject(new Error('Could not load Google sign-in'));
+    document.head.appendChild(sc);
+  });
+}
+async function getToken() {
+  await loadGoogle();
   return new Promise((resolve, reject) => {
     const client = google.accounts.oauth2.initTokenClient({
       client_id: GOOGLE_CLIENT_ID,
