@@ -1,0 +1,10 @@
+name: Verify index.html matches source
+on: [push, pull_request]
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 build.py
+      - run: git diff --exit-code index.html
+      - run: node --check src/bookmarklet.js
