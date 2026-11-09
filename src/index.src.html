@@ -43,6 +43,10 @@
   body.txt .only-gdoc, body.gdoc .only-txt { display:none; }
   .bm-row { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
   .drag-hint { font-size:13px; color:var(--accent); font-weight:600; }
+  .plug { display:flex; gap:14px; align-items:center; margin-top:28px; padding:14px 18px; background:#fff; border:1px solid var(--line); border-radius:14px; text-decoration:none; color:#3a3a42; font-size:14px; line-height:1.45; transition:.15s; }
+  .plug:hover { border-color:#5551D8; box-shadow:0 2px 12px rgba(85,81,216,.12); }
+  .plug b { color:var(--ink); }
+  .plug img { border-radius:10px; flex:none; }
 </style>
 </head>
 <body class="txt">
@@ -100,6 +104,10 @@ Of course! Here's a rough plan…</pre>
   </section>
 
   <p class="fine only-gdoc">Google Docs allow up to 100 tabs per document, so large archives are split into several docs (Part 1, Part 2, …). Google also limits how fast documents can be written, to about 30 chats per minute. Keep this tab open until it's finished. This page asks only for permission to create files in your Drive. It can't see any of your other files.</p>
+  <a class="plug" href="https://prodocktivity.bennet-gibony.com/" target="_blank" rel="noopener">
+    <img src="prodocktivity-icon.png" alt="" width="44" height="44">
+    <span><b>Also by me: proDOCKtivity</b><br>A free Mac app that keeps your apps, websites and folders in one bar beside your work, sorted into workspaces. →</span>
+  </a>
   <p class="fine"><a href="privacy.html">Privacy policy</a> · <a href="https://github.com/bennetgibony/AI_account_migrator">Source code on GitHub</a></p>
   <p class="fine">Only each chat's current version is exported. If you edited a message, only the latest branch is included. Attachments are listed by name, without their contents. If a chat site changes how it works, the button may stop working until it's updated.</p>
 </main>
