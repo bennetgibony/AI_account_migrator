@@ -89,7 +89,7 @@ Of course! Here's a rough plan…</pre>
     <h2><span class="num">3</span>Create your Google Doc</h2>
     <label class="hint" for="docname">Document name</label>
     <input type="text" id="docname" value="My AI chats">
-    <button id="go" disabled>Sign in with Google &amp; create doc</button>
+    <button id="go" disabled>Do step 2 first: no chats received yet</button>
     <progress id="bar" value="0" max="1" hidden></progress>
     <div id="status"></div>
     <div id="links"></div>
@@ -309,6 +309,7 @@ function accept(payload) {
   d.textContent = '✓ ' + payload.chats.length + ' ' + (payload.source || '') + ' chats received';
   $('docname').value = (payload.source || 'AI') + ' chats ' + (payload.exported || '').slice(0, 10);
   $('go').disabled = false;
+  $('go').textContent = 'Sign in with Google & create doc';
 }
 addEventListener('message', e => {
   if (e.data && e.data.type === 'chats') { accept(e.data.data); try { e.source.postMessage('chats:received', e.origin); } catch (_) {} }
