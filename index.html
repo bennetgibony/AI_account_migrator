@@ -41,6 +41,8 @@
   @media (max-width:560px) { .modes { grid-template-columns:1fr; } }
   pre { background:#f0eee9; border-radius:10px; padding:14px 16px; font-size:12.5px; overflow:auto; margin:10px 0 0; }
   body.txt .only-gdoc, body.gdoc .only-txt { display:none; }
+  .bm-row { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+  .drag-hint { font-size:13px; color:var(--accent); font-weight:600; }
 </style>
 </head>
 <body class="txt">
@@ -59,9 +61,10 @@
   </section>
 
   <section class="step">
-    <h2><span class="num">1</span>Drag the button to your bookmarks bar</h2>
-    <p>If you can't see the bookmarks bar, press <code>Ctrl/⌘ + Shift + B</code>. If you switch the option above, drag the button again, because each option has its own button.</p>
-    <a class="bm" id="bm" href="#" onclick="alert('Drag this button to your bookmarks bar instead of clicking it.');return false;">⇣ Export my chats</a>
+    <h2><span class="num">1</span>Drag the orange button into your bookmarks bar</h2>
+    <p><b>Don't click it here.</b> Click and hold the orange <b>Export my chats</b> button, drag it up into the bookmarks bar at the top of your browser (just below the address bar), and let go. It then shows up there as a bookmark.</p>
+    <div class="bm-row"><a class="bm" id="bm" href="#" onclick="alert('Don\'t click it here. Drag this button up into your bookmarks bar instead.');return false;">⇣ Export my chats</a><span class="drag-hint">↑ drag me into your bookmarks bar</span></div>
+    <p class="hint">Can't see a bookmarks bar? Press <code>Ctrl + Shift + B</code> (Windows) or <code>⌘ + Shift + B</code> (Mac). If you switch the option above, drag the button again, because each option has its own button.</p>
   </section>
 
   <section class="step">
@@ -87,6 +90,7 @@ Of course! Here's a rough plan…</pre>
 
   <section class="step only-gdoc">
     <h2><span class="num">3</span>Create your Google Doc</h2>
+    <p class="hint" style="margin:0 0 10px">You can only sign in with Google after step 2, once your chats have arrived on this page.</p>
     <label class="hint" for="docname">Document name</label>
     <input type="text" id="docname" value="My AI chats">
     <button id="go" disabled>Do step 2 first: no chats received yet</button>
