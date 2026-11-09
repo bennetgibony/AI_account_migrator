@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#121214">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Export your AI chats</title>
 <meta name="description" content="Copy all your Claude or ChatGPT chats into one Google Doc, one tab per chat. Runs entirely in your browser.">
@@ -9,42 +11,44 @@
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="logo-512.png">
 <style>
-  :root { --ink:#1b1b1f; --muted:#6b6b76; --line:#e6e4df; --bg:#faf9f6; --accent:#c15f3c; --blue:#1a73e8; }
+  :root { color-scheme:dark; --bg:#121214; --card:#1b1b1f; --card2:#232328; --ink:#ededf0; --text:#c9c8cf; --muted:#8e8d97; --line:#2c2c33; --accent:#d9714c; --accent-bg:#2a1d18; --blue:#5b9bff; }
   * { box-sizing: border-box; }
-  body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.55 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.55 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif; -webkit-font-smoothing:antialiased; }
+  a { color:var(--accent); }
   main { max-width:680px; margin:0 auto; padding:56px 22px 80px; }
   h1 { font-size:34px; line-height:1.15; margin:0 0 10px; letter-spacing:-.02em; }
   .lead { color:var(--muted); margin:0 0 36px; }
-  .step { background:#fff; border:1px solid var(--line); border-radius:14px; padding:22px 24px; margin:0 0 16px; }
+  .step { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:22px 24px; margin:0 0 16px; }
   .step h2 { font-size:17px; margin:0 0 8px; display:flex; gap:10px; align-items:center; }
-  .num { background:var(--ink); color:#fff; width:24px; height:24px; border-radius:50%; font-size:13px; display:inline-grid; place-items:center; flex:none; }
-  .step p { margin:6px 0; color:#3a3a42; }
+  .num { background:var(--ink); color:var(--bg); width:24px; height:24px; border-radius:50%; font-size:13px; font-weight:700; display:inline-grid; place-items:center; flex:none; }
+  .step p { margin:6px 0; color:var(--text); }
   .bm { display:inline-block; margin:10px 0 4px; background:var(--accent); color:#fff; text-decoration:none; font-weight:600; padding:10px 18px; border-radius:999px; cursor:grab; }
   .hint { font-size:13px; color:var(--muted); }
   #drop { border:2px dashed var(--line); border-radius:12px; padding:22px; text-align:center; color:var(--muted); margin-top:10px; transition:.15s; }
-  #drop.over { border-color:var(--accent); background:#fff6f2; }
-  #drop.ok { border-style:solid; border-color:#2e9d5b; color:#1e6b3e; background:#f1faf4; }
-  input[type=text] { width:100%; font:inherit; padding:10px 12px; border:1px solid var(--line); border-radius:8px; margin:8px 0 12px; }
-  button { font:inherit; font-weight:600; background:var(--blue); color:#fff; border:0; border-radius:8px; padding:11px 18px; cursor:pointer; }
-  button:disabled { background:#b9c6da; cursor:not-allowed; }
+  #drop.over { border-color:var(--accent); background:var(--accent-bg); }
+  #drop.ok { border-style:solid; border-color:#3fb872; color:#7fe0a6; background:#14261b; }
+  input[type=text] { width:100%; font:inherit; color:var(--ink); background:var(--card2); padding:10px 12px; border:1px solid var(--line); border-radius:8px; margin:8px 0 12px; }
+  input[type=text]:focus { outline:2px solid var(--accent); outline-offset:-1px; }
+  button { font:inherit; font-weight:600; background:var(--blue); color:#0b1220; border:0; border-radius:8px; padding:11px 18px; cursor:pointer; }
+  button:disabled { background:#2f3440; color:#8e95a5; cursor:not-allowed; }
   progress { width:100%; height:10px; margin-top:14px; accent-color:var(--blue); }
-  #status { font-size:14px; color:#3a3a42; margin-top:8px; white-space:pre-line; }
+  #status { font-size:14px; color:var(--text); margin-top:8px; white-space:pre-line; }
   #links a { display:block; margin-top:6px; color:var(--blue); font-weight:600; }
   .fine { font-size:13px; color:var(--muted); margin-top:28px; }
-  code { background:#f0eee9; padding:1px 5px; border-radius:4px; font-size:.9em; }
+  code { background:var(--card2); color:var(--ink); padding:1px 5px; border-radius:4px; font-size:.9em; }
   .modes { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:6px; }
   .mode { border:1.5px solid var(--line); border-radius:12px; padding:14px; cursor:pointer; display:block; }
   .mode input { margin:0 6px 0 0; accent-color:var(--accent); }
   .mode span { display:block; font-size:13px; color:var(--muted); margin-top:4px; }
-  .mode:has(input:checked) { border-color:var(--accent); background:#fff6f2; }
+  .mode:has(input:checked) { border-color:var(--accent); background:var(--accent-bg); }
   .mode.disabled { opacity:.5; cursor:not-allowed; }
   @media (max-width:560px) { .modes { grid-template-columns:1fr; } }
-  pre { background:#f0eee9; border-radius:10px; padding:14px 16px; font-size:12.5px; overflow:auto; margin:10px 0 0; }
+  pre { background:var(--card2); color:var(--text); border-radius:10px; padding:14px 16px; font-size:12.5px; overflow:auto; margin:10px 0 0; }
   body.txt .only-gdoc, body.gdoc .only-txt { display:none; }
   .bm-row { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
   .drag-hint { font-size:13px; color:var(--accent); font-weight:600; }
-  .plug { display:flex; gap:14px; align-items:center; margin-top:28px; padding:14px 18px; background:#fff; border:1px solid var(--line); border-radius:14px; text-decoration:none; color:#3a3a42; font-size:14px; line-height:1.45; transition:.15s; }
-  .plug:hover { border-color:#5551D8; box-shadow:0 2px 12px rgba(85,81,216,.12); }
+  .plug { display:flex; gap:14px; align-items:center; margin-top:28px; padding:14px 18px; background:var(--card); border:1px solid var(--line); border-radius:14px; text-decoration:none; color:var(--text); font-size:14px; line-height:1.45; transition:.15s; }
+  .plug:hover { border-color:#8E8CF7; box-shadow:0 2px 16px rgba(142,140,247,.15); }
   .plug b { color:var(--ink); }
   .plug img { border-radius:10px; flex:none; }
 </style>
